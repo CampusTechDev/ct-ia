@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="CT IA - Plataforma de inteligência artificial, automação e experiências interativas da Campus Tech Developers.">
+<title>CT IA | Campus Tech Developers</title>
+
+<style>
+:root {
+  --bg: #07111f;
+  --panel: #101f32;
+  --cyan: #23d9f5;
+  --blue: #1689ff;
+  --text: #f0f7ff;
+  --muted: #9aadc2;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration: none; }
+header {
+  padding: 18px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #1c3047;
+  background: #07111feF;
+}
+.logo {
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+.logo span { color: var(--cyan); }
+nav { display: flex; gap: 26px; }
+nav a { color: var(--muted); font-size: 14px; }
+nav a:hover { color: var(--cyan); }
+.hero {
+  min-height: 570px;
+  padding: 110px 8% 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 80% 35%, #075d8b44, transparent 45%),
+    radial-gradient(ellipse at 15% 85%, #102b7040, transparent 45%);
+}
+.tag {
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+h1 {
+  font-size: clamp(42px, 7vw, 76px);
+  line-height: 1.08;
+  max-width: 850px;
+  margin: 22px 0;
+}
+h1 span {
+  background: linear-gradient(90deg, #23d9f5, #1689ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero p {
+  max-width: 650px;
+  color: var(--muted);
+  font-size: 18px;
+}
+.button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 13px 25px;
+  background: linear-gradient(90deg, #087ebd, #0876df);
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.button:hover { filter: brightness(1.2); }
+section { padding: 75px 8%; }
+.section-title {
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+.section-description {
+  color: var(--muted);
+  margin-bottom: 35px;
+}
+.modules {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.module {
+  background: var(--panel);
+  border: 1px solid #203b55;
+  padding: 28px;
+  border-radius: 14px;
+  transition: .2s;
+}
+.module:hover {
+  transform: translateY(-5px);
+  border-color: var(--cyan);
+}
+.module-icon {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+.module h3 { color: var(--cyan); }
+.module p { color: var(--muted); font-size: 14px; }
+.status {
+  display: inline-block;
+  color: #9ab4c9;
+  font-size: 11px;
+  border: 1px solid #36516b;
+  border-radius: 20px;
+  padding: 4px 10px;
+  margin-top: 10px;
+}
+.about {
+  background: #0b192a;
+}
+.about-content {
+  max-width: 850px;
+}
+.about p { color: var(--muted); }
+footer {
+  padding: 35px 8%;
+  border-top: 1px solid #1c3047;
+  color: var(--muted);
+  font-size: 13px;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-top: 15px;
+}
+.footer-links a:hover { color: var(--cyan); }
+@media(max-width: 750px) {
+  header { flex-wrap: wrap; gap: 15px; }
+  nav { gap: 15px; flex-wrap: wrap; }
+  .hero { min-height: 480px; padding-top: 80px; }
+  .modules { grid-template-columns: 1fr; }
+  section { padding: 55px 7%; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="logo">CT<span> IA</span></a>
+  <nav>
+    <a href="#inicio">Início</a>
+    <a href="#modulos">Plataforma</a>
+    <a href="#sobre">Sobre</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="tag">CAMPUS TECH DEVELOPERS</div>
+  <h1>O futuro das lives começa com <span>inteligência.</span></h1>
+  <p>
+    Uma plataforma experimental de inteligência artificial,
+    automação e experiências interativas para transformar
+    transmissões ao vivo em experiências extraordinárias.
+  </p>
+  <div>
+    <a href="#modulos" class="button">Conheça a plataforma →</a>
+  </div>
+</section>
+
+<section id="modulos">
+  <div class="tag">NOSSA TECNOLOGIA</div>
+  <h2 class="section-title">Um novo universo de possibilidades.</h2>
+  <p class="section-description">
+    Conheça os módulos que estamos desenvolvendo para o ecossistema CT IA.
+  </p>
+
+  <div class="modules">
+
+    <article class="module">
+      <div class="module-icon">📡</div>
+      <h3>LIVE CONNECT</h3>
+      <p>
+        Camada de integração para receber e organizar
+        eventos de transmissões ao vivo por meio de
+        conectores e serviços compatíveis.
+      </p>
+      <span class="status">Em desenvolvimento</span>
+    </article>
+
+    <article class="module">
+      <div class="module-icon">✨</div>
+      <h3>LIVE FX</h3>
+      <p>
+        Motor de efeitos visuais, animações, partículas
+        e experiências interativas acionadas por eventos
+        das transmissões.
+      </p>
+      <span class="status">Em desenvolvimento</span>
+    </article>
+
+    <article class="module">
+      <div class="module-icon">🧠</div>
+      <h3>AI ENGINE</h3>
+      <p>
+        Inteligência artificial para interpretação
+        de mensagens, automação e criação de
+        experiências inteligentes.
+      </p>
+      <span class="status">Em desenvolvimento</span>
+    </article>
+
+  </div>
+</section>
+
+<section class="about" id="sobre">
+  <div class="about-content">
+    <div class="tag">NOSSA MISSÃO</div>
+    <h2 class="section-title">Tecnologia que conecta pessoas.</h2>
+    <p>
+      O CT IA é um projeto da Campus Tech Developers
+      dedicado à pesquisa e ao desenvolvimento de
+      soluções web com inteligência artificial.
+    </p>
+    <p>
+      Nosso objetivo é criar ferramentas acessíveis,
+      experiências digitais inovadoras e novas formas
+      de interação entre criadores de conteúdo e suas comunidades.
+    </p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="logo">CT<span> IA</span></div>
+  <p>Uma iniciativa da Campus Tech Developers.</p>
+  <div class="footer-links">
+    <a href="terms.html">Termos de Serviço</a>
+    <a href="privacy.html">Política de Privacidade</a>
+    <a href="https://github.com/CampusTechDev/ct-ia" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </div>
+  <p>© 2026 Campus Tech Developers. Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>
