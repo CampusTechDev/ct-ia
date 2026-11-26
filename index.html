@@ -3,283 +3,1271 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CT IA Control Center</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<title>CT IA | Control Center</title>
+
 <style>
 :root {
-  --bg:#07111f;--panel:#101f32;--line:#203b55;
-  --cyan:#23d9f5;--blue:#1689ff;--text:#eff7ff;
-  --muted:#91a8bf;--green:#35d49a;
+  --bg:#07111f;
+  --panel:#101f32;
+  --line:#203b55;
+  --cyan:#23d9f5;
+  --blue:#1689ff;
+  --text:#eff7ff;
+  --muted:#91a8bf;
+  --green:#35d49a;
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-font-family:Arial,sans-serif}
-button,input{font:inherit}
-button{cursor:pointer}
-header{height:65px;padding:0 24px;border-bottom:1px solid var(--line);
-display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:24px;font-weight:900}
-.logo span{color:var(--cyan)}
-.status{color:var(--green);font-size:12px}
-.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 65px)}
-aside{padding:22px 14px;border-right:1px solid var(--line)}
-.nav{padding:13px;border-radius:8px;color:var(--muted);
-margin-bottom:7px;font-size:14px}
-.nav.active{background:#12304a;color:var(--cyan)}
-main{padding:25px;min-width:0}
-h1{font-size:25px;margin:0 0 6px}
-.sub{color:var(--muted);font-size:13px;margin-bottom:22px}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-.metric,.panel{background:var(--panel);border:1px solid var(--line);
-border-radius:12px;padding:17px}
-.metric small{color:var(--muted)}
-.metric strong{display:block;font-size:26px;margin-top:9px}
-.workarea{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:16px}
-.panel h2{font-size:16px;margin:0 0 15px}
-.stage{height:340px;border-radius:10px;overflow:hidden;position:relative;
-display:flex;align-items:center;justify-content:center;text-align:center;
-background:radial-gradient(ellipse at center,#12385a,#07111f 75%);
-border:1px solid #24516c}
-.stage-brand{font-size:38px;font-weight:900}
-.stage-brand span{color:var(--cyan)}
-.stage-hint{color:var(--muted);font-size:12px}
-.effect{position:absolute;inset:0;display:flex;align-items:center;
-justify-content:center;flex-direction:column;pointer-events:none;
-animation:appear 2.5s forwards}
-.effect .emoji{font-size:85px;filter:drop-shadow(0 0 20px #23d9f5)}
-.effect .effect-title{font-size:25px;font-weight:bold;text-shadow:0 2px 15px #000}
-.effect .effect-user{color:var(--cyan);font-size:16px;margin-top:8px}
-@keyframes appear{
-0%{opacity:0;transform:scale(.45)}
-15%{opacity:1;transform:scale(1.1)}
-30%{transform:scale(1)}
-80%{opacity:1}
-100%{opacity:0;transform:scale(1.25)}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
 }
-.controls{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
-.action{border:1px solid var(--line);background:#142a40;color:white;
-padding:13px 10px;border-radius:8px;text-align:left}
-.action:hover{border-color:var(--cyan);background:#183953}
-.action b{display:block;margin-bottom:4px}
-.action small{color:var(--muted);font-size:11px}
-.comment-form{display:flex;gap:7px;margin-top:12px}
-.comment-form input{min-width:0;flex:1;background:#071522;color:white;
-border:1px solid var(--line);border-radius:7px;padding:11px}
-.primary{border:0;border-radius:7px;background:#087fbd;color:white;
-padding:11px 15px;font-weight:bold}
-.feed{height:220px;overflow:auto}
-.event{padding:10px 0;border-bottom:1px solid var(--line);font-size:12px}
-.event small{display:block;color:var(--muted);margin-top:4px}
-.battlebar{height:13px;border-radius:20px;background:#23364c;
-overflow:hidden;display:flex;margin:12px 0}
-.battle-blue{background:#1689ff;width:50%;transition:width .3s}
-.battle-red{background:#ef476f;flex:1}
-.battle-buttons{display:flex;gap:8px}
-.battle-buttons button{flex:1}
-.secondary{background:#263b52;color:white;border:1px solid var(--line);
-padding:10px;border-radius:7px}
-.footer-note{color:var(--muted);font-size:11px;margin-top:18px}
-@media(max-width:850px){
-.layout{grid-template-columns:1fr}
-aside{display:none}
-.metrics{grid-template-columns:repeat(2,1fr)}
-.workarea{grid-template-columns:1fr}
-main{padding:16px}
+
+button,input,select { font:inherit; }
+button { cursor:pointer; }
+
+header {
+  height:65px;
+  padding:0 24px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo {
+  font-size:24px;
+  font-weight:900;
+}
+
+.logo span { color:var(--cyan); }
+
+.status {
+  color:var(--green);
+  font-size:12px;
+}
+
+.layout {
+  display:grid;
+  grid-template-columns:220px 1fr;
+  min-height:calc(100vh - 65px);
+}
+
+aside {
+  padding:22px 14px;
+  border-right:1px solid var(--line);
+}
+
+.nav {
+  display:block;
+  padding:13px;
+  border-radius:8px;
+  color:var(--muted);
+  margin-bottom:7px;
+  font-size:14px;
+  text-decoration:none;
+}
+
+.nav:hover,.nav.active {
+  background:#12304a;
+  color:var(--cyan);
+}
+
+main {
+  padding:25px;
+  min-width:0;
+}
+
+h1 {
+  font-size:25px;
+  margin:0 0 6px;
+}
+
+.sub {
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:22px;
+}
+
+.metrics {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.metric,.panel {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:17px;
+}
+
+.metric small { color:var(--muted); }
+
+.metric strong {
+  display:block;
+  font-size:26px;
+  margin-top:9px;
+}
+
+.workarea {
+  display:grid;
+  grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);
+  gap:16px;
+}
+
+.panel h2 {
+  font-size:16px;
+  margin:0 0 15px;
+}
+
+.stage {
+  height:340px;
+  border-radius:10px;
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:radial-gradient(ellipse at center,#12385a,#07111f 75%);
+  border:1px solid #24516c;
+}
+
+.stage-idle {
+  transition:opacity .2s;
+}
+
+.stage.is-playing .stage-idle {
+  opacity:0;
+}
+
+.stage-brand {
+  font-size:38px;
+  font-weight:900;
+}
+
+.stage-brand span { color:var(--cyan); }
+
+.stage-hint {
+  color:var(--muted);
+  font-size:12px;
+}
+
+.effect {
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  pointer-events:none;
+  z-index:2;
+  animation:appear 2.5s forwards;
+}
+
+.effect .emoji {
+  font-size:85px;
+  filter:drop-shadow(0 0 20px var(--cyan));
+}
+
+.effect .effect-title {
+  font-size:25px;
+  font-weight:bold;
+  text-shadow:0 2px 15px #000;
+}
+
+.effect .effect-user {
+  color:var(--cyan);
+  font-size:16px;
+  margin-top:8px;
+}
+
+@keyframes appear {
+  0% {opacity:0;transform:scale(.45)}
+  15% {opacity:1;transform:scale(1.1)}
+  30% {transform:scale(1)}
+  80% {opacity:1}
+  100% {opacity:0;transform:scale(1.25)}
+}
+
+/* ANIMATION STUDIO */
+
+.studio-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.studio-field {
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  margin:8px 0;
+}
+
+.studio-field label {
+  color:var(--muted);
+  font-size:12px;
+}
+
+.studio-field select {
+  width:100%;
+  background:#071522;
+  color:white;
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:11px;
+  outline:none;
+}
+
+.studio-field select:focus {
+  border-color:var(--cyan);
+}
+
+.studio-preview {
+  min-height:145px;
+  margin-top:14px;
+  background:#071522;
+  border:1px solid var(--line);
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  overflow:hidden;
+  position:relative;
+}
+
+.studio-preview-icon {
+  font-size:42px;
+  z-index:1;
+}
+
+.studio-preview small {
+  color:var(--muted);
+  margin-top:8px;
+  z-index:1;
+}
+
+.studio-actions {
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.studio-actions button { flex:1; }
+
+.studio-status {
+  color:var(--green);
+  font-size:12px;
+  margin-top:12px;
+  min-height:16px;
+}
+
+/* PETALS FX */
+
+.petal-layer {
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:3;
+}
+
+.petal {
+  position:absolute;
+  top:-25px;
+  width:13px;
+  height:20px;
+  border-radius:80% 0 80% 0;
+  background:linear-gradient(135deg,#ffc2d8,#ec347c);
+  box-shadow:0 0 9px #f65b9b;
+  animation:petalFall var(--fall-time) ease-in forwards;
+  animation-delay:var(--fall-delay);
+  opacity:0;
+}
+
+@keyframes petalFall {
+  0% {
+    transform:translate3d(0,-10px,0) rotate(0deg);
+    opacity:0;
+  }
+  15% { opacity:1; }
+  100% {
+    transform:translate3d(var(--drift),370px,0) rotate(520deg);
+    opacity:0;
+  }
+}
+
+.controls {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+}
+
+.action {
+  border:1px solid var(--line);
+  background:#142a40;
+  color:white;
+  padding:13px 10px;
+  border-radius:8px;
+  text-align:left;
+}
+
+.action:hover {
+  border-color:var(--cyan);
+  background:#183953;
+}
+
+.action b {
+  display:block;
+  margin-bottom:4px;
+}
+
+.action small {
+  color:var(--muted);
+  font-size:11px;
+}
+
+.comment-form {
+  display:flex;
+  gap:7px;
+  margin-top:12px;
+}
+
+.comment-form input {
+  min-width:0;
+  flex:1;
+  background:#071522;
+  color:white;
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:11px;
+}
+
+.primary {
+  border:0;
+  border-radius:7px;
+  background:#087fbd;
+  color:white;
+  padding:11px 15px;
+  font-weight:bold;
+}
+
+.primary:hover { background:#079bdc; }
+
+.secondary {
+  background:#263b52;
+  color:white;
+  border:1px solid var(--line);
+  padding:10px;
+  border-radius:7px;
+}
+
+.secondary:hover { border-color:var(--cyan); }
+
+.feed {
+  height:220px;
+  overflow:auto;
+}
+
+.event {
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+  font-size:12px;
+}
+
+.event small {
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.battlebar {
+  height:13px;
+  border-radius:20px;
+  background:#23364c;
+  overflow:hidden;
+  display:flex;
+  margin:12px 0;
+}
+
+.battle-blue {
+  background:#1689ff;
+  width:50%;
+  transition:width .3s;
+}
+
+.battle-red {
+  background:#ef476f;
+  flex:1;
+}
+
+.battle-buttons {
+  display:flex;
+  gap:8px;
+}
+
+.battle-buttons button { flex:1; }
+
+.footer-note {
+  color:var(--muted);
+  font-size:11px;
+  margin-top:18px;
+}
+
+.section-space { margin-top:16px; }
+
+@media(max-width:850px) {
+  .layout { grid-template-columns:1fr; }
+  aside { display:none; }
+  .metrics { grid-template-columns:repeat(2,1fr); }
+  .workarea { grid-template-columns:1fr; }
+  main { padding:16px; }
+}
+
+@media(max-width:420px) {
+  .studio-grid { grid-template-columns:1fr; }
+  .studio-actions { flex-direction:column; }
+  header { padding:0 14px; }
 }
 </style>
 </head>
+
 <body>
+
 <header>
   <div class="logo">CT <span>IA</span></div>
   <div class="status">● LABORATÓRIO ONLINE</div>
 </header>
 
 <div class="layout">
+
 <aside>
-  <div class="nav active">▦ Dashboard</div>
-  <div class="nav">✦ Live FX</div>
-  <div class="nav">♡ Eventos</div>
-  <div class="nav">⚔ Batalhas</div>
-  <div class="nav">⚙ Configurações</div>
-  <p class="footer-note">CT IA CONTROL CENTER<br>Versão experimental 1.0</p>
+  <a class="nav active" href="#dashboard">▦ Dashboard</a>
+  <a class="nav" href="#studio">✦ Animation Studio</a>
+  <a class="nav" href="#events">♡ Eventos</a>
+  <a class="nav" href="#battle">⚔ Batalhas</a>
+  <a class="nav" href="#settings">⚙ Configurações</a>
+
+  <p class="footer-note">
+    CT IA CONTROL CENTER<br>
+    Versão experimental 1.1
+  </p>
 </aside>
 
-<main>
+<main id="dashboard">
+
   <h1>Central de controle</h1>
-  <div class="sub">Laboratório de eventos e efeitos visuais em tempo real.</div>
+  <div class="sub">
+    Laboratório de eventos e efeitos visuais em tempo real.
+  </div>
 
   <div class="metrics">
-    <div class="metric"><small>Eventos recebidos</small><strong id="total">0</strong></div>
-    <div class="metric"><small>Presentes</small><strong id="gifts">0</strong></div>
-    <div class="metric"><small>Comentários</small><strong id="comments">0</strong></div>
-    <div class="metric"><small>Seguidores</small><strong id="followers">0</strong></div>
+    <div class="metric">
+      <small>Eventos recebidos</small>
+      <strong id="total">0</strong>
+    </div>
+
+    <div class="metric">
+      <small>Presentes</small>
+      <strong id="gifts">0</strong>
+    </div>
+
+    <div class="metric">
+      <small>Comentários</small>
+      <strong id="comments">0</strong>
+    </div>
+
+    <div class="metric">
+      <small>Seguidores</small>
+      <strong id="followers">0</strong>
+    </div>
   </div>
 
   <div class="workarea">
+
+    <!-- PALCO LIVE FX -->
+
     <section class="panel">
       <h2>✦ Palco de efeitos LIVE FX</h2>
+
       <div class="stage" id="stage">
-        <div>
-          <div class="stage-brand">CT <span style="color:var(--cyan)">IA</span></div>
-          <div class="stage-hint">AGUARDANDO EVENTOS...</div>
+
+        <div class="stage-idle">
+          <div class="stage-brand">
+            CT <span>IA</span>
+          </div>
+          <div class="stage-hint">
+            AGUARDANDO EVENTOS...
+          </div>
         </div>
+
       </div>
-      <p class="footer-note">Os efeitos aparecem aqui quando você dispara um evento.</p>
+
+      <p class="footer-note">
+        Os efeitos aparecem aqui quando você dispara um evento.
+      </p>
     </section>
 
-    <section class="panel">
+    <!-- EVENTOS DE TESTE -->
+
+    <section class="panel" id="events">
       <h2>⚡ Disparar eventos de teste</h2>
+
       <div class="controls">
-        <button class="action" onclick="gift('Rosa','🌹','+1 presente')">
-          <b>🌹 Rosa</b><small>Presente simples</small>
+
+        <button class="action"
+          onclick="gift('Rosa','🌹','+1 presente')">
+          <b>🌹 Rosa</b>
+          <small>Chuva de pétalas personalizada</small>
         </button>
-        <button class="action" onclick="gift('Coração','💖','+1 presente')">
-          <b>💖 Coração</b><small>Presente especial</small>
+
+        <button class="action"
+          onclick="gift('Coração','💖','+1 presente')">
+          <b>💖 Coração</b>
+          <small>Presente especial</small>
         </button>
-        <button class="action" onclick="gift('Leão','🦁','+1 presente')">
-          <b>🦁 Leão</b><small>Presente épico</small>
+
+        <button class="action"
+          onclick="gift('Leão','🦁','+1 presente')">
+          <b>🦁 Leão</b>
+          <small>Presente épico</small>
         </button>
-        <button class="action" onclick="follow()">
-          <b>⭐ Seguidor</b><small>Novo fã na live</small>
+
+        <button class="action"
+          onclick="follow()">
+          <b>⭐ Seguidor</b>
+          <small>Novo fã na live</small>
         </button>
+
       </div>
+
       <div class="comment-form">
-        <input id="commentInput" placeholder="Escreva um comentário...">
-        <button class="primary" onclick="sendComment()">Enviar</button>
+        <input id="commentInput"
+          placeholder="Escreva um comentário...">
+
+        <button class="primary" onclick="sendComment()">
+          Enviar
+        </button>
       </div>
-      <p class="footer-note">Todos os eventos desta tela são fictícios.</p>
+
+      <p class="footer-note">
+        Todos os eventos desta tela são fictícios.
+      </p>
     </section>
 
-    <section class="panel">
+  </div>
+
+  <!-- ANIMATION STUDIO -->
+
+  <section class="panel section-space" id="studio">
+
+    <h2>✦ CT IA Animation Studio</h2>
+
+    <p class="footer-note">
+      Personalize como cada presente será apresentado na LIVE.
+    </p>
+
+    <div class="studio-grid">
+
+      <div class="studio-field">
+        <label for="studioGift">Presente</label>
+        <select id="studioGift">
+          <option value="rose">🌹 Rosa</option>
+        </select>
+      </div>
+
+      <div class="studio-field">
+        <label for="studioEffect">Animação</label>
+        <select id="studioEffect">
+          <option value="petals">🌸 Chuva de pétalas</option>
+        </select>
+      </div>
+
+      <div class="studio-field">
+        <label for="studioDuration">Duração</label>
+        <select id="studioDuration">
+          <option value="1.5">1,5 segundos</option>
+          <option value="2">2 segundos</option>
+          <option value="3">3 segundos</option>
+          <option value="5">5 segundos</option>
+        </select>
+      </div>
+
+      <div class="studio-field">
+        <label for="studioIntensity">Intensidade</label>
+        <select id="studioIntensity">
+          <option value="small">Suave</option>
+          <option value="medium">Medium</option>
+          <option value="large">Intensa</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="studio-preview" id="studioPreview">
+
+      <div class="studio-preview-icon">🌹</div>
+
+      <small>PRÉVIA DA ANIMAÇÃO</small>
+
+    </div>
+
+    <div class="studio-actions">
+
+      <button class="secondary" onclick="previewRose()">
+        ▶ Testar animação
+      </button>
+
+      <button class="primary" onclick="saveRoseConfig()">
+        ✓ Salvar configuração
+      </button>
+
+      <button class="secondary" onclick="resetRoseConfig()">
+        Restaurar padrão
+      </button>
+
+    </div>
+
+    <div class="studio-status" id="studioStatus">
+      Configuração inicial: Petals / 2 segundos / Medium.
+    </div>
+
+  </section>
+
+  <!-- BATALHAS -->
+
+  <div class="workarea section-space">
+
+    <section class="panel" id="battle">
+
       <h2>⚔ Simulador de batalha</h2>
+
       <div style="display:flex;justify-content:space-between">
         <b style="color:#49a9ff">Equipe azul</b>
         <b style="color:#ff6689">Equipe vermelha</b>
       </div>
+
       <div style="display:flex;justify-content:space-between;font-size:23px">
         <strong id="blueScore">0</strong>
         <strong id="redScore">0</strong>
       </div>
+
       <div class="battlebar">
         <div class="battle-blue" id="blueBar"></div>
         <div class="battle-red"></div>
       </div>
+
       <div class="battle-buttons">
-        <button class="secondary" onclick="battle('blue')">+10 Azul</button>
-        <button class="secondary" onclick="battle('red')">+10 Vermelho</button>
+        <button class="secondary" onclick="battle('blue')">
+          +10 Azul
+        </button>
+
+        <button class="secondary" onclick="battle('red')">
+          +10 Vermelho
+        </button>
       </div>
-      <button class="primary" style="width:100%;margin-top:10px"
-      onclick="resetBattle()">Reiniciar batalha</button>
+
+      <button class="primary"
+        style="width:100%;margin-top:10px"
+        onclick="resetBattle()">
+        Reiniciar batalha
+      </button>
+
     </section>
 
+    <!-- HISTÓRICO -->
+
     <section class="panel">
+
       <h2>◉ Histórico de eventos</h2>
+
       <div class="feed" id="feed">
-        <div class="event">Sistema iniciado<small>Aguardando primeiro teste</small></div>
+
+        <div class="event">
+          Sistema iniciado
+          <small>Aguardando primeiro teste</small>
+        </div>
+
       </div>
-      <button class="secondary" style="width:100%;margin-top:10px"
-      onclick="clearFeed()">Limpar histórico</button>
+
+      <button class="secondary"
+        style="width:100%;margin-top:10px"
+        onclick="clearFeed()">
+        Limpar histórico
+      </button>
+
     </section>
+
   </div>
+
+  <!-- CONFIGURAÇÕES -->
+
+  <section class="panel section-space" id="settings">
+
+    <h2>⚙ Configurações</h2>
+
+    <p class="footer-note">
+      Preferências locais do laboratório CT IA.
+    </p>
+
+    <p>
+      <strong>Áudio:</strong> desativado.
+    </p>
+
+    <p>
+      <strong>Modo de efeitos:</strong> visual.
+    </p>
+
+    <p>
+      <strong>Armazenamento:</strong> navegador local.
+    </p>
+
+    <p class="footer-note">
+      As configurações deste protótipo ficam salvas neste navegador.
+    </p>
+
+  </section>
 
   <p class="footer-note">
     CT IA é um projeto experimental da Campus Tech Developers.
-    Esta versão não possui conexão com uma transmissão real.
+    Esta versão ainda não possui conexão com uma transmissão real.
   </p>
+
 </main>
 </div>
 
 <script>
-const state={total:0,gifts:0,comments:0,followers:0,blue:0,red:0};
-const $=id=>document.getElementById(id);
 
-function update(){
-  $('total').textContent=state.total;
-  $('gifts').textContent=state.gifts;
-  $('comments').textContent=state.comments;
-  $('followers').textContent=state.followers;
-  $('blueScore').textContent=state.blue;
-  $('redScore').textContent=state.red;
-  const sum=state.blue+state.red;
-  const percent=sum?state.blue/sum*100:50;
-  $('blueBar').style.width=percent+'%';
+/* ESTADO GERAL */
+
+const state = {
+  total:0,
+  gifts:0,
+  comments:0,
+  followers:0,
+  blue:0,
+  red:0
+};
+
+const $ = id => document.getElementById(id);
+
+
+/* CONFIGURAÇÃO PADRÃO DA ROSA */
+
+const defaultRoseConfig = {
+  animation:'petals',
+  duration:2,
+  intensity:'medium'
+};
+
+let roseConfig = {...defaultRoseConfig};
+
+
+/* CARREGAR CONFIGURAÇÃO SALVA */
+
+function loadRoseConfig() {
+
+  try {
+
+    const saved = localStorage.getItem('ctia_rose_config');
+
+    if(saved) {
+
+      const parsed = JSON.parse(saved);
+
+      roseConfig = {
+        ...defaultRoseConfig,
+        ...parsed
+      };
+
+      if(![1.5,2,3,5].includes(Number(roseConfig.duration))) {
+        roseConfig.duration = 2;
+      }
+
+      if(!['small','medium','large'].includes(roseConfig.intensity)) {
+        roseConfig.intensity = 'medium';
+      }
+
+      if(roseConfig.animation !== 'petals') {
+        roseConfig.animation = 'petals';
+      }
+
+    }
+
+  } catch(error) {
+
+    console.error('Erro ao carregar configuração:',error);
+
+    roseConfig = {...defaultRoseConfig};
+
+  }
+
+  $('studioEffect').value = roseConfig.animation;
+  $('studioDuration').value = String(roseConfig.duration);
+  $('studioIntensity').value = roseConfig.intensity;
+
 }
 
-function log(title,detail){
-  const item=document.createElement('div');
-  item.className='event';
-  const name=document.createElement('strong');
-  name.textContent=title;
-  const info=document.createElement('small');
-  info.textContent=detail+' • '+new Date().toLocaleTimeString('pt-BR');
+
+/* ATUALIZAR INDICADORES */
+
+function update() {
+
+  $('total').textContent = state.total;
+  $('gifts').textContent = state.gifts;
+  $('comments').textContent = state.comments;
+  $('followers').textContent = state.followers;
+
+  $('blueScore').textContent = state.blue;
+  $('redScore').textContent = state.red;
+
+  const sum = state.blue + state.red;
+
+  const percent = sum
+    ? state.blue / sum * 100
+    : 50;
+
+  $('blueBar').style.width = percent + '%';
+
+}
+
+
+/* HISTÓRICO */
+
+function log(title,detail) {
+
+  const item = document.createElement('div');
+  item.className = 'event';
+
+  const name = document.createElement('strong');
+  name.textContent = title;
+
+  const info = document.createElement('small');
+
+  info.textContent =
+    detail + ' • ' +
+    new Date().toLocaleTimeString('pt-BR');
+
   item.append(name,info);
+
   $('feed').prepend(item);
+
 }
 
-function effect(emoji,title,user='Fã da live'){
-  const stage=$('stage');
-  const old=stage.querySelector('.effect');
-  if(old)old.remove();
-  const box=document.createElement('div');
-  box.className='effect';
-  const icon=document.createElement('div');
-  icon.className='emoji';
-  icon.textContent=emoji;
-  const label=document.createElement('div');
-  label.className='effect-title';
-  label.textContent=title;
-  const person=document.createElement('div');
-  person.className='effect-user';
-  person.textContent=user;
+
+/* EFEITO SIMPLES */
+
+function effect(emoji,title,user='Fã da live') {
+
+  const stage = $('stage');
+
+  stage.querySelectorAll('.effect,.petal-layer')
+    .forEach(el => el.remove());
+
+  stage.classList.add('is-playing');
+
+  const box = document.createElement('div');
+  box.className = 'effect';
+
+  const icon = document.createElement('div');
+  icon.className = 'emoji';
+  icon.textContent = emoji;
+
+  const label = document.createElement('div');
+  label.className = 'effect-title';
+  label.textContent = title;
+
+  const person = document.createElement('div');
+  person.className = 'effect-user';
+  person.textContent = user;
+
   box.append(icon,label,person);
+
   stage.append(box);
-  setTimeout(()=>box.remove(),2600);
+
+  setTimeout(() => {
+
+    box.remove();
+
+    if(!stage.querySelector('.petal-layer')) {
+      stage.classList.remove('is-playing');
+    }
+
+  },2600);
+
 }
 
-function gift(name,emoji,detail){
-  state.total++;state.gifts++;update();
-  effect(emoji,name+' recebido!');
-  log('Presente: '+name,detail);
+
+/* LER CONFIGURAÇÃO DO EDITOR */
+
+function readRoseControls() {
+
+  return {
+
+    animation:$('studioEffect').value,
+
+    duration:Number($('studioDuration').value),
+
+    intensity:$('studioIntensity').value
+
+  };
+
 }
 
-function follow(){
-  state.total++;state.followers++;update();
+
+/* CRIAR CHUVA DE PÉTALAS */
+
+function createPetals(container,config) {
+
+  const layer = document.createElement('div');
+
+  layer.className = 'petal-layer';
+
+  const amounts = {
+
+    small:8,
+
+    medium:14,
+
+    large:24
+
+  };
+
+  const count = amounts[config.intensity] || 14;
+
+  for(let i=0;i<count;i++) {
+
+    const petal = document.createElement('div');
+
+    petal.className = 'petal';
+
+    petal.style.left = Math.random() * 95 + '%';
+
+    petal.style.setProperty(
+      '--fall-time',
+      (config.duration * (0.75 + Math.random() * 0.5)) + 's'
+    );
+
+    petal.style.setProperty(
+      '--fall-delay',
+      (Math.random() * 0.35) + 's'
+    );
+
+    petal.style.setProperty(
+      '--drift',
+      (Math.random() * 150 - 75) + 'px'
+    );
+
+    layer.appendChild(petal);
+
+  }
+
+  container.appendChild(layer);
+
+  return layer;
+
+}
+
+
+/* EXECUTAR ANIMAÇÃO DA ROSA */
+
+function playRoseEffect(user='Fã da live',config=roseConfig) {
+
+  const stage = $('stage');
+
+  stage.querySelectorAll('.effect,.petal-layer')
+    .forEach(el => el.remove());
+
+  stage.classList.add('is-playing');
+
+  createPetals(stage,config);
+
+  const box = document.createElement('div');
+
+  box.className = 'effect';
+
+  box.style.animationDuration = config.duration + 's';
+
+  const icon = document.createElement('div');
+
+  icon.className = 'emoji';
+  icon.textContent = '🌹';
+
+  const label = document.createElement('div');
+
+  label.className = 'effect-title';
+  label.textContent = 'ROSA RECEBIDA!';
+
+  const person = document.createElement('div');
+
+  person.className = 'effect-user';
+  person.textContent = '@' + user.replace(/^@/,'');
+
+  box.append(icon,label,person);
+
+  stage.appendChild(box);
+
+  setTimeout(() => {
+
+    stage.querySelectorAll('.effect,.petal-layer')
+      .forEach(el => el.remove());
+
+    stage.classList.remove('is-playing');
+
+  },(config.duration + 0.8) * 1000);
+
+}
+
+
+/* TESTAR ANIMAÇÃO */
+
+function previewRose() {
+
+  const previewConfig = readRoseControls();
+
+  const preview = $('studioPreview');
+
+  preview.replaceChildren();
+
+  createPetals(preview,previewConfig);
+
+  const icon = document.createElement('div');
+
+  icon.className = 'studio-preview-icon';
+  icon.textContent = '🌹';
+
+  const label = document.createElement('small');
+
+  label.textContent = 'CHUVA DE PÉTALAS';
+
+  preview.append(icon,label);
+
+  playRoseEffect('PRÉVIA CT IA',previewConfig);
+
+  $('studioStatus').textContent =
+    'Prévia executada: ' +
+    previewConfig.duration +
+    's / ' +
+    previewConfig.intensity;
+
+  setTimeout(() => {
+
+    preview.replaceChildren();
+
+    const newIcon = document.createElement('div');
+
+    newIcon.className = 'studio-preview-icon';
+    newIcon.textContent = '🌹';
+
+    const newLabel = document.createElement('small');
+
+    newLabel.textContent = 'PRÉVIA DA ANIMAÇÃO';
+
+    preview.append(newIcon,newLabel);
+
+  },(previewConfig.duration + 0.8) * 1000);
+
+}
+
+
+/* SALVAR CONFIGURAÇÃO */
+
+function saveRoseConfig() {
+
+  const config = readRoseControls();
+
+  if(!Number.isFinite(config.duration)) {
+    $('studioStatus').textContent = 'Duração inválida.';
+    return;
+  }
+
+  roseConfig = config;
+
+  try {
+
+    localStorage.setItem(
+      'ctia_rose_config',
+      JSON.stringify(roseConfig)
+    );
+
+    $('studioStatus').textContent =
+      '✓ Rosa salva: Petals / ' +
+      roseConfig.duration +
+      's / ' +
+      roseConfig.intensity;
+
+  } catch(error) {
+
+    $('studioStatus').textContent =
+      'Não foi possível salvar no navegador.';
+
+    console.error(error);
+
+  }
+
+}
+
+
+/* RESTAURAR PADRÃO */
+
+function resetRoseConfig() {
+
+  roseConfig = {...defaultRoseConfig};
+
+  $('studioEffect').value = 'petals';
+  $('studioDuration').value = '2';
+  $('studioIntensity').value = 'medium';
+
+  saveRoseConfig();
+
+  $('studioStatus').textContent =
+    'Configuração padrão restaurada.';
+
+}
+
+
+/* PRESENTES */
+
+function gift(name,emoji,detail) {
+
+  state.total++;
+  state.gifts++;
+
+  update();
+
+  if(name.toLowerCase() === 'rosa') {
+
+    playRoseEffect('Fã da live');
+
+  } else {
+
+    effect(emoji,name + ' RECEBIDO!');
+
+  }
+
+  log('Presente: ' + name,detail);
+
+}
+
+
+/* SEGUIDORES */
+
+function follow() {
+
+  state.total++;
+  state.followers++;
+
+  update();
+
   effect('⭐','NOVO SEGUIDOR!');
+
   log('Novo seguidor','Um fã começou a seguir');
+
 }
 
-function sendComment(){
-  const input=$('commentInput');
-  const message=input.value.trim();
-  if(!message)return;
-  state.total++;state.comments++;update();
+
+/* COMENTÁRIOS */
+
+function sendComment() {
+
+  const input = $('commentInput');
+
+  const message = input.value.trim();
+
+  if(!message) return;
+
+  state.total++;
+  state.comments++;
+
+  update();
+
   effect('💬','NOVO COMENTÁRIO',message);
+
   log('Comentário recebido',message);
-  input.value='';
+
+  input.value = '';
+
 }
 
 $('commentInput').addEventListener('keydown',e=>{
-  if(e.key==='Enter')sendComment();
+
+  if(e.key === 'Enter') sendComment();
+
 });
 
-function battle(team){
+
+/* BATALHAS */
+
+function battle(team) {
+
   state.total++;
-  state[team]+=10;
+
+  state[team] += 10;
+
   update();
-  const blue=team==='blue';
-  effect(blue?'🔵':'🔴',blue?'ATAQUE AZUL!':'ATAQUE VERMELHO!');
-  log('Batalha',blue?'Equipe azul +10 pontos':'Equipe vermelha +10 pontos');
+
+  const blue = team === 'blue';
+
+  effect(
+    blue ? '🔵' : '🔴',
+    blue ? 'ATAQUE AZUL!' : 'ATAQUE VERMELHO!'
+  );
+
+  log(
+    'Batalha',
+    blue
+      ? 'Equipe azul +10 pontos'
+      : 'Equipe vermelha +10 pontos'
+  );
+
 }
 
-function resetBattle(){
-  state.blue=0;state.red=0;update();
+
+function resetBattle() {
+
+  state.blue = 0;
+  state.red = 0;
+
+  update();
+
   log('Batalha reiniciada','Placar zerado');
+
 }
 
-function clearFeed(){
+
+/* LIMPAR HISTÓRICO */
+
+function clearFeed() {
+
   $('feed').replaceChildren();
+
   log('Histórico limpo','Novo ciclo de testes');
+
 }
+
+
+/* INICIALIZAÇÃO */
+
+loadRoseConfig();
+
+update();
+
+console.log('CT IA Control Center inicializado.');
+
+console.log('Animation Studio pronto.');
+
+console.log('Configuração da Rosa:',roseConfig);
+
 </script>
+
 </body>
 </html>
