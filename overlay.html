@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CT IA LIVE OVERLAY</title>
+
+<style>
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:transparent;
+  font-family:Arial,sans-serif;
+  color:white;
+}
+
+#overlay{
+  position:relative;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+#effects{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+
+.alert{
+  position:absolute;
+  left:50%;
+  top:34%;
+  width:90%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  animation:alertIn 3.2s ease forwards;
+}
+
+.icon{
+  font-size:clamp(65px,14vw,120px);
+  filter:drop-shadow(0 0 20px #23d9f5);
+  animation:float 1.6s ease-in-out infinite;
+}
+
+.title{
+  margin-top:12px;
+  font-size:clamp(23px,5vw,43px);
+  font-weight:900;
+  text-shadow:0 3px 15px #000,0 0 15px #1689ff;
+  overflow-wrap:anywhere;
+}
+
+.username{
+  margin-top:9px;
+  font-size:clamp(15px,3vw,24px);
+  font-weight:bold;
+  color:#35e4ff;
+  text-shadow:0 2px 8px #000;
+  overflow-wrap:anywhere;
+}
+
+.message{
+  margin:18px auto 0;
+  display:inline-block;
+  max-width:95%;
+  padding:13px 20px;
+  border:1px solid #39dfff;
+  border-radius:14px;
+  background:rgba(5,20,40,.86);
+  box-shadow:0 0 24px #1689ff88;
+  font-size:clamp(15px,3vw,23px);
+  overflow-wrap:anywhere;
+}
+
+.epic .icon{
+  filter:drop-shadow(0 0 30px #ffc947);
+}
+.epic .title{color:#ffe18a}
+.epic .username{color:#ffe18a}
+.epic .message{
+  border-color:#ffda70;
+  box-shadow:0 0 30px #ffbd4488;
+}
+
+.particle{
+  position:absolute;
+  left:var(--x);
+  top:var(--y);
+  font-size:var(--size);
+  pointer-events:none;
+  animation:particleFly var(--duration) ease-out forwards;
+}
+
+.ring{
+  position:absolute;
+  left:50%;
+  top:34%;
+  width:30px;
+  height:30px;
+  border:3px solid #23d9f5;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  animation:ring 1.3s ease-out forwards;
+}
+
+.battle-alert{
+  position:absolute;
+  left:50%;
+  top:18%;
+  transform:translateX(-50%);
+  width:90%;
+  text-align:center;
+  padding:14px;
+  border-radius:14px;
+  background:rgba(5,18,38,.88);
+  border:1px solid #23d9f5;
+  box-shadow:0 0 30px #1689ff88;
+  animation:alertIn 2.5s ease forwards;
+}
+
+.battle-alert strong{
+  display:block;
+  color:#23d9f5;
+  font-size:clamp(24px,6vw,42px);
+}
+
+@keyframes alertIn{
+  0%{opacity:0;scale:.55}
+  12%{opacity:1;scale:1.08}
+  22%{scale:1}
+  78%{opacity:1}
+  100%{opacity:0;scale:1.12}
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0) rotate(-4deg)}
+  50%{transform:translateY(-17px) rotate(4deg)}
+}
+
+@keyframes particleFly{
+  0%{opacity:0;transform:translate(0,0) scale(.4) rotate(0)}
+  15%{opacity:1}
+  100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.3) rotate(180deg)}
+}
+
+@keyframes ring{
+  0%{width:30px;height:30px;opacity:1}
+  100%{width:380px;height:380px;opacity:0}
+}
+
+/* Painel de demonstração */
+#demo{
+  display:none;
+  position:absolute;
+  bottom:15px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(94%,520px);
+  padding:14px;
+  border:1px solid #28516c;
+  border-radius:13px;
+  background:rgba(5,15,29,.94);
+  pointer-events:auto;
+  box-shadow:0 0 25px #0009;
+}
+
+#demo h3{
+  margin:0 0 12px;
+  color:#23d9f5;
+  font-size:14px;
+}
+
+.demo-buttons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+}
+
+.demo-buttons button{
+  border:1px solid #28516c;
+  background:#122b43;
+  color:white;
+  border-radius:8px;
+  padding:11px 5px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.demo-buttons button:hover{
+  border-color:#23d9f5;
+  background:#1b4260;
+}
+
+#demo small{
+  display:block;
+  color:#91a8bf;
+  margin-top:10px;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div id="overlay">
+  <div id="effects"></div>
+
+  <div id="demo">
+    <h3>CT IA — LABORATÓRIO DE ANIMAÇÕES</h3>
+    <div class="demo-buttons">
+      <button onclick="demoGift('Rosa','🌹','normal')">🌹 Rosa</button>
+      <button onclick="demoGift('Coração','💖','special')">💖 Coração</button>
+      <button onclick="demoGift('Leão','🦁','epic')">🦁 Leão</button>
+      <button onclick="demoFollow()">⭐ Seguidor</button>
+      <button onclick="demoComment()">💬 Comentário</button>
+      <button onclick="demoBattle()">⚔ Batalha</button>
+    </div>
+    <small>Modo de demonstração — eventos fictícios</small>
+  </div>
+</div>
+
+<script>
+const effects=document.getElementById('effects');
+const queue=[];
+let playing=false;
+
+function particles(count=22,emoji='✨'){
+  for(let i=0;i<count;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.textContent=emoji;
+    p.style.setProperty('--x',Math.random()*100+'%');
+    p.style.setProperty('--y',(25+Math.random()*45)+'%');
+    p.style.setProperty('--dx',(Math.random()-.5)*450+'px');
+    p.style.setProperty('--dy',(-100-Math.random()*450)+'px');
+    p.style.setProperty('--size',(14+Math.random()*25)+'px');
+    p.style.setProperty('--duration',(1.2+Math.random()*1.5)+'s');
+    effects.appendChild(p);
+    setTimeout(()=>p.remove(),3000);
+  }
+}
+
+function showRing(){
+  const ring=document.createElement('div');
+  ring.className='ring';
+  effects.appendChild(ring);
+  setTimeout(()=>ring.remove(),1400);
+}
+
+function addAlert(data){
+  return new Promise(resolve=>{
+    const box=document.createElement('div');
+    box.className='alert '+(data.level==='epic'?'epic':'');
+    const icon=document.createElement('div');
+    icon.className='icon';
+    icon.textContent=data.icon||'✨';
+
+    const title=document.createElement('div');
+    title.className='title';
+    title.textContent=data.title||'EVENTO';
+
+    const user=document.createElement('div');
+    user.className='username';
+    user.textContent=data.user||'Fã da live';
+
+    box.append(icon,title,user);
+
+    if(data.message){
+      const msg=document.createElement('div');
+      msg.className='message';
+      msg.textContent=data.message;
+      box.append(msg);
+    }
+
+    effects.appendChild(box);
+    showRing();
+
+    if(data.level==='epic'){
+      particles(45,'🌟');
+      particles(20,'✨');
+    }else if(data.level==='special'){
+      particles(25,'💠');
+    }else{
+      particles(14,'✨');
+    }
+
+    setTimeout(()=>{
+      box.remove();
+      resolve();
+    },3300);
+  });
+}
+
+function addBattle(data){
+  return new Promise(resolve=>{
+    const box=document.createElement('div');
+    box.className='battle-alert';
+
+    const label=document.createElement('div');
+    label.textContent='⚔ BATALHA LIVE ⚔';
+
+    const score=document.createElement('strong');
+    score.textContent=data.message||'ATAQUE!';
+
+    const user=document.createElement('div');
+    user.textContent=data.user||'Equipe em ação';
+
+    box.append(label,score,user);
+    effects.appendChild(box);
+    particles(25,data.team==='red'?'🔥':'⚡');
+
+    setTimeout(()=>{
+      box.remove();
+      resolve();
+    },2600);
+  });
+}
+
+async function processQueue(){
+  if(playing||queue.length===0)return;
+  playing=true;
+
+  while(queue.length){
+    const item=queue.shift();
+    if(item.type==='battle'){
+      await addBattle(item);
+    }else{
+      await addAlert(item);
+    }
+    await new Promise(r=>setTimeout(r,250));
+  }
+  playing=false;
+}
+
+function trigger(event){
+  if(!event||!event.type)return;
+
+  const item={...event};
+
+  if(item.type==='gift'){
+    item.title=item.title||'PRESENTE RECEBIDO!';
+    item.level=item.level||'normal';
+    item.icon=item.icon||'🎁';
+  }
+  if(item.type==='follow'){
+    item.title='NOVO SEGUIDOR!';
+    item.icon='⭐';
+    item.level='special';
+  }
+  if(item.type==='comment'){
+    item.title='NOVO COMENTÁRIO';
+    item.icon='💬';
+    item.message=item.message||'Olá!';
+  }
+
+  queue.push(item);
+  processQueue();
+}
+
+/* Interface pública para futuras integrações */
+window.CTIAOverlay={
+  trigger,
+  getQueueLength:()=>queue.length
+};
+
+/* Eventos personalizados para testes e integração */
+window.addEventListener('ctia:event',event=>{
+  trigger(event.detail);
+});
+
+/* Demonstração */
+function demoGift(name,icon,level){
+  trigger({
+    type:'gift',
+    title:name.toUpperCase()+' RECEBIDO!',
+    icon,
+    user:'@FãDoCTIA',
+    level
+  });
+}
+
+function demoFollow(){
+  trigger({
+    type:'follow',
+    user:'@NovoSeguidor'
+  });
+}
+
+function demoComment(){
+  trigger({
+    type:'comment',
+    user:'@ComunidadeCT',
+    message:'Essa live está incrível!'
+  });
+}
+
+function demoBattle(){
+  trigger({
+    type:'battle',
+    team:'blue',
+    message:'ATAQUE AZUL!',
+    user:'EQUIPE AZUL'
+  });
+}
+
+if(new URLSearchParams(location.search).get('demo')==='1'){
+  document.getElementById('demo').style.display='block';
+}
+</script>
+
+</body>
+</html>
